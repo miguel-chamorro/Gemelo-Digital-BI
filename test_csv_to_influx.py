@@ -1,9 +1,10 @@
 import influxdb_client
 from influxdb_client.client.write_api import SYNCHRONOUS
+import bucket_api
 
 
 
-#borrar el contenido del bucket en influx cada vez que se ejecute la prueba
+#cambiar por el bucket correspondiente
 bucket = "traffic"
 #cambiar por organizacion correspondiente
 org = "U-TAD"
@@ -17,6 +18,10 @@ client = influxdb_client.InfluxDBClient(
     token=token,
     org=org
 )
+
+cubo=bucket_api.BucketsApi(client)
+cubo.create_bucket(bucket_name="traffic",org=org)
+
 write_api = client.write_api(write_options=SYNCHRONOUS)
 import csv
 i=0
@@ -29,8 +34,7 @@ with open('accicentes_prueba.csv', newline='') as csvfile:
             column_names=row
         if i > 0:
             for j in range(0,len(column_names)):
-                print(column_names[j]+": "+row[j])
-                p = influxdb_client.Point("crashes").tag("crashes", "crash"+str(i)).field(column_names[j],row[j])
+                p = influxdb_client.Point("crashes").tag("crashes", "crash"+str(i)).field(column_names[j], row[j])
                 write_api.write(bucket=bucket, org=org, record=p)
 
         i=i+1
@@ -42,3 +46,5 @@ for table in result:
     for record in table.records:
         results.append((record.get_field(), record.get_value()))
 print(results)
+#borrar el contenido del bucket en influx cada vez que se ejecute la prueba
+cubo.delete_bucket(cubo.find_bucket_by_name("traffic"))
