@@ -1,0 +1,32 @@
+version: "3.4"
+
+# https://docs.influxdata.com/influxdb/v1.7/administration/config
+services:
+  influxdb:
+    image: docker.io/influxdb:2.0.9
+    environment:
+      - INFLUXDB_ADMIN_ENABLED=true 
+      - INFLUXDB_ADMIN_USER=${INFLUXDB_ADMIN_USER:-admin}
+      - INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_ADMIN_PASSWORD:-admin}
+      - INFLUXDB_DB=prometheus
+      - INFLUXDB_HTTP_LOG_ENABLED=false
+      - INFLUXDB_REPORTING_DISABLED=true
+      - INFLUXDB_USER=${INFLUXDB_USER:-prometheus}
+      - INFLUXDB_USER_PASSWORD=${INFLUXDB_USER_PASSWORD:-prompass}
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          memory: 2048M
+        reservations:
+          memory: 1024M
+    healthcheck:
+      test: "ln -sf /bin/busybox /bin/wget && /bin/wget -q -Y off http://localhost:8086/metrics -O /dev/null > /dev/null 2>&1"
+      interval: 25s
+      timeout: 3s
+      start_period: 30s
+    ports: 
+      - 8086:8086
+    volumes:
+      - ./local_bind_volume_dir:/var/lib/influxdb
