@@ -1,0 +1,10 @@
+num_expediente;fecha;hora;localizacion;numero;cod_distrito;distrito;tipo_accidente;estado_meteorológico;tipo_vehiculo;tipo_persona;rango_edad;sexo;cod_lesividad;lesividad;coordenada_x_utm;coordenada_y_utm;positiva_alcohol;positiva_droga
+2022S000001;01/01/2022;1:30:00;AVDA. ALBUFERA, 19;19;13;PUENTE DE VALLECAS;Alcance;Despejado;Turismo;Conductor;De 30 a 34 años;Mujer;NULL;NULL;443359,226;4472082,272;N;NULL
+2022S000001;01/01/2022;1:30:00;AVDA. ALBUFERA, 19;19;13;PUENTE DE VALLECAS;Alcance;Despejado;Turismo;Conductor;De 45 a 49 años;Hombre;NULL;NULL;443359,226;4472082,272;N;NULL
+2022S000002;01/01/2022;0:30:00;PLAZA. CANOVAS DEL CASTILLO / PASEO. PRADO;2;3;RETIRO;Colisión fronto-lateral;NULL;Motocicleta hasta 125cc;Conductor;De 30 a 34 años;Hombre;NULL;NULL;441155,351;4474129,588;S;NULL
+2022S000002;01/01/2022;0:30:00;PLAZA. CANOVAS DEL CASTILLO / PASEO. PRADO;2;3;RETIRO;Colisión fronto-lateral;NULL;Motocicleta hasta 125cc;Pasajero;De 35 a 39 años;Mujer;NULL;NULL;441155,351;4474129,588;N;NULL
+2022S000002;01/01/2022;0:30:00;PLAZA. CANOVAS DEL CASTILLO / PASEO. PRADO;2;3;RETIRO;Colisión fronto-lateral;NULL;Turismo;Conductor;De 40 a 44 años;Hombre;NULL;NULL;441155,351;4474129,588;N;NULL
+2022S000003;01/01/2022;1:50:00;CALL. SAN BERNARDO, 53;53;1;CENTRO;Atropello a persona;Despejado;Motocicleta > 125cc;Conductor;Desconocido;Desconocido;NULL;NULL;439995,351;4475212,523;N;NULL
+2022S000003;01/01/2022;1:50:00;CALL. SAN BERNARDO, 53;53;1;CENTRO;Atropello a persona;Despejado;Motocicleta > 125cc;Peatón;De 18 a 20 años;Mujer;7;Asistencia sanitaria sólo en el lugar del accidente;439995,351;4475212,523;N;NULL
+2022S000004;01/01/2022;3:40:00;CALL. ALCALA / PLAZA. EISENHOWER;728;20;SAN BLAS-CANILLEJAS;Choque contra obstáculo fijo;Despejado;Turismo;Conductor;De 50 a 54 años;Hombre;2;Ingreso inferior o igual a 24 horas;449693,925;4477837,552;N;NULL
+2022S000004;01/01/2022;3:40:00;CALL. ALCALA / PLAZA. EISENHOWER;728;20;SAN BLAS-CANILLEJAS;Choque contra obstáculo fijo;Despejado;Turismo;Pasajero;De 55 a 59 años;Mujer;3;Ingreso superior a 24 horas;449693,925;4477837,552;N;NULL
