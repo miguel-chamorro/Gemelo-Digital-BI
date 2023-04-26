@@ -1,0 +1,7 @@
+helm repo add influxdata https://helm.influxdata.com/
+helm search repo influxdata
+helm upgrade --install influxdata/influxdb2
+helm upgrade --install influxdb influxdata/influxdb2
+kubectl port-forward influxdb-influxdb2-0 8086:8086
+kubectl get secrets influxdb-influxdb2-auth -o yaml
+# traducir de Base64 la contraseña
