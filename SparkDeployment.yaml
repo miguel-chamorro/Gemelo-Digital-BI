@@ -1,0 +1,121 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: spark-master
+  labels:
+    app: spark
+    role: master
+spec:
+  selector:
+    app: spark
+    role: master
+  ports:
+    - name: spark
+      port: 7077
+      targetPort: 7077
+    - name: webui
+      port: 8080
+      targetPort: 8080
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-master
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spark
+      role: master
+  template:
+    metadata:
+      labels:
+        app: spark
+        role: master
+    spec:
+      containers:
+        - name: spark-master
+          image: cluster-apache-spark:3.0.2
+          command: ["./bin/spark-class", "org.apache.spark.deploy.master.Master"]
+          args: ["--host", "0.0.0.0"]
+          ports:
+            - containerPort: 7077
+              name: spark
+            - containerPort: 8080
+              name: webui
+          volumeMounts:
+            - name: spark-data
+              mountPath: /opt/spark-data
+            - name: spark-apps
+              mountPath: /opt/spark-apps
+      volumes:
+        - name: spark-data
+          persistentVolumeClaim:
+            claimName: spark-data
+        - name: spark-apps
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spark-worker
+  labels:
+    app: spark
+    role: worker
+spec:
+  selector:
+    app: spark
+    role: worker
+  ports:
+    - name: spark
+      port: 7078
+      targetPort: 7078
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-worker
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: spark
+      role: worker
+  template:
+    metadata:
+      labels:
+        app: spark
+        role: worker
+    spec:
+      containers:
+        - name: spark-worker
+          image: cluster-apache-spark:3.0.2
+          command: ["./bin/spark-class", "org.apache.spark.deploy.worker.Worker"]
+          args: ["spark://spark-master:7077"]
+          env:
+            - name: SPARK_WORKER_CORES
+              value: "1"
+            - name: SPARK_WORKER_MEMORY
+              value: "1g"
+            - name: SPARK_DRIVER_MEMORY
+              value: "1g"
+            - name: SPARK_EXECUTOR_MEMORY
+              value: "1g"
+            - name: SPARK_LOCAL_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          ports:
+            - containerPort: 7078
+              name: spark
+          volumeMounts:
+            - name: spark-data
+              mountPath: /opt/spark-data
+            - name: spark-apps
+              mountPath: /opt/spark-apps
+      volumes:
+        - name: spark-data
+          persistentVolumeClaim:
+            claimName: spark-data
+        - name: spark-apps
