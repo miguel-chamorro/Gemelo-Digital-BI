@@ -1,0 +1,7 @@
+/opt/spark/bin/spark-submit --master spark://spark-master:7077 --driver-memory 1G --executor-memory 1G  --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.0.2 /opt/spark-apps/main.py
+
+
+kafka-topics --create --topic test --bootstrap-server localhost:9093
+
+
+from(bucket: "prueba") |> range(start:1900-01-01)
